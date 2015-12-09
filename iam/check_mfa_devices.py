@@ -26,9 +26,11 @@ args=parser.parse_args()
 class iaManage:
     def __init__(self,user):
         try:
-            # fetch credentials from ./.boto
+            # fetch credentials from ./.boto if exists
             boto_credentials = os.getcwd() + "/.boto"
-            boto.config.load_credential_file(boto_credentials)
+            if ( os.path.exists(boto_credentials)):
+                boto.config.load_credential_file(boto_credentials)
+
             self.iam_conn = boto.connect_iam()
         except Exception, e:
             print("connection error, Check your credentials")
